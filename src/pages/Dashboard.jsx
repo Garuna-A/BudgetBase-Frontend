@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 
 
 export default function Dashboard() {
+   const [username, setUsername] = useState("");
   const [transactions, setTransactions] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
@@ -28,6 +29,7 @@ export default function Dashboard() {
           },
         });
         console.log(res.data.groupedMonthly);
+        setUsername(res.data.username || "User");
         setTransactions(res.data.transactions||[]);
         setGroupExpenses(res.data.groupedExpenses||[])
         setGroupedMonthly(res.data.groupedMonthly||[]);
@@ -44,7 +46,7 @@ export default function Dashboard() {
     <div>
       <Navbar/>
     <div className="p-4 bg-orange-100 min-h-screen font-display">
-      
+      <h2 className="text-2xl font-semibold text-orange-600 mb-4">Hello, {username} 👋</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <SummaryCard label="Income" amount={totalIncome} color="green" />
         <SummaryCard label="Expense" amount={totalExpense} color="red" />
