@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import AddTransaction from './pages/AddTransaction'
+import NotFound from './pages/NotFound'
 import './App.css'
 
 function App(){
@@ -15,6 +16,7 @@ function App(){
       <Route path='/register' element={<Register/>}/>
       <Route path='/dashboard' element={isLoggedIn? <Dashboard/>:<Navigate to='/login' />}/>
       <Route path='/add' element={isLoggedIn? <AddTransaction/>:<Navigate to='/login' />}/>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 };
