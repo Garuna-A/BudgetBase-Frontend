@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [totalExpense, setTotalExpense] = useState(0);
   const [groupedExpenses,setGroupExpenses] = useState([]);
   const [groupedMonthly,setGroupedMonthly] = useState([]);
+  const[loading,setLoading] = useState(true);
 //   const [viewMode, setViewMode] = useState("monthly"); // or 'daily'
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -23,6 +24,7 @@ export default function Dashboard() {
     async function fetchData() {
       try {
         console.log(month,year);
+
         const res = await axios.get(`/transaction/monthly?month=${month}&year=${year}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -38,6 +40,9 @@ export default function Dashboard() {
       } catch (err) {
         console.error(err);
       }
+      finally{
+        setLoading(false);
+      }
     }
     fetchData();
   }, [month, year]);
@@ -45,6 +50,13 @@ export default function Dashboard() {
   return (
     <div>
       <Navbar/>
+    
+    {loading?(
+        <div className="flex justify-center items-center mt-4">
+          <div className="w-6 h-6 border-4 border-white border-t-orange-500 rounded-full animate-spin"></div>
+          <span className="ml-2 text-orange-600 font-semibold">Fetching your data...</span>
+        </div>
+    ):(
     <div className="p-4 bg-orange-100 min-h-screen font-display">
       <h2 className="text-2xl font-semibold text-orange-600 mb-4">Hello, {username} 👋</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -106,6 +118,7 @@ export default function Dashboard() {
 
       </div>
     </div>
+    )}
     </div>
   );
 }
