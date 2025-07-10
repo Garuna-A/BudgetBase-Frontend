@@ -1,29 +1,41 @@
 import React, { useState } from "react";
 import axios from "../api/axiosInstance";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 export default function Login(){
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const navigate = useNavigate();
+    const [loading,setLoading] = useState(false);
+    // const navigate = useNavigate();
 
     const handleLogin= async(e) =>{
         e.preventDefault();
+        setLoading(true);
         try{
             const res = await axios.post('/auth/login', {email,password});
             localStorage.setItem('token', res.data.token);
-            navigate('/dashboard');
+            window.location.href = '/dashboard';
         }
         catch(err){
             console.error(err);
             alert("Login failed");
+        }
+        finally{
+          setLoading(false);
         }
     }
 
     return (
       <div>
         <Navbar/>
+        {loading? (
+          <div className="flex justify-center items-center mt-4">
+            <div className="w-6 h-6 border-4 border-white border-t-orange-500 rounded-full animate-spin"></div>
+            <span className="ml-2 text-orange-600 font-semibold">Logging in...</span>
+          </div>
+
+        ):(
         <div className="min-h-screen flex items-center justify-center bg-orange-100">
           <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm">
             <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Login</h2>
@@ -56,6 +68,7 @@ export default function Login(){
             <p className="text-sm text-center mt-2">Don't have an account? <a href="/register" className="text-orange-500 font-medium">Register</a></p>
           </div>
         </div>
+        )}
       </div>
       );
       
