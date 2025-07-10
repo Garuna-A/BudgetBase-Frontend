@@ -10,13 +10,13 @@ export default function Navbar(){
         navigate('/login');
     }
     return(
-    <nav className=" bg-orange-500 text-white px-4 py-3 flex justify-between items-center font-display">
+    <nav className="bg-orange-500 text-white px-4 py-3 flex flex-wrap justify-between items-center font-display">
       <h1 className="text-3xl py-2 flex items-center gap-2">
         <HandCoins className="w-10 h-10 text-white" />
         <Link to="/dashboard" className="text-inherit">BudgetBase</Link>
       </h1>
 
-      <div className="flex items-center space-x-4 text-white">
+      <div className="flex flex-wrap items-center gap-4 mt-2 sm:mt-0">
         <a 
             href="https://github.com/Garuna-A/Finman-backend" 
             target="_blank" 

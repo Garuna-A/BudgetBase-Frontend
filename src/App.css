@@ -4,3 +4,6 @@
 @theme{
     --font-display:"Manrope","sans-serif";
 }
+body{
+    overflow-x: hidden;
+}
