@@ -10,6 +10,7 @@ function App(){
 
   return(
     <Routes>
+      <Route path="/" element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />} />
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/dashboard' element={isLoggedIn? <Dashboard/>:<Navigate to='/login' />}/>
